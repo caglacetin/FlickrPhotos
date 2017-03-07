@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">InspiringPhotos</string>
+
+    <!-- Main Fragment-->
+    <string name="photo_url_format">photoUrl</string>
+    <string name="title_flickr">flickr</string>
+
+    <string-array name="photo_types">
+        <item>Recent Photos</item>
+        <item>Popular Photos</item>
+    </string-array>
+
 </resources>

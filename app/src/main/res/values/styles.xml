@@ -8,4 +8,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="SpinnerTheme" parent="android:Widget.Spinner">
+        <item name="android:background">@drawable/bg_spinner</item>
+    </style>
+
+    <style name="AppTheme.Title.Flickr" parent="android:style/Widget.TextView">
+        <item name="android:textSize">@dimen/textsize_xlarge</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

@@ -22,10 +22,10 @@ import butterknife.ButterKnife;
 
 public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.MainViewHolder> {
 
-    private List<Photo> recentPhotos;
+    private List<Photo> recentPhotoList;
 
-    public PhotoAdapter(List<Photo> recentPhotos){
-        this.recentPhotos = recentPhotos;
+    public PhotoAdapter(List<Photo> recentPhotoList){
+        this.recentPhotoList = recentPhotoList;
     }
 
     @Override
@@ -37,12 +37,12 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.MainViewHold
 
     @Override
     public void onBindViewHolder(MainViewHolder holder, int position) {
-        //String photoFormat = "https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg";
+        //String photoUrlFormat = "https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg";
 
-        String farmId = String.valueOf(recentPhotos.get(position).photoFarm);
-        String photoServerID = recentPhotos.get(position).photoServer;
-        String photoId = recentPhotos.get(position).photoId;
-        String photoSecret = recentPhotos.get(position).photoSecret;
+        String farmId = String.valueOf(recentPhotoList.get(position).photoFarm);
+        String photoServerID = recentPhotoList.get(position).photoServer;
+        String photoId = recentPhotoList.get(position).photoId;
+        String photoSecret = recentPhotoList.get(position).photoSecret;
         String photoUrl = Globals.HTTP_FARM + farmId + Globals.PHOTO_STATIC_URL + photoServerID + "/" + photoId +"_"+ photoSecret + ".jpg";
 
         Picasso.with(holder.itemView.getContext()).load(photoUrl).into(holder.recentPhotoImageView);
@@ -51,7 +51,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.MainViewHold
 
     @Override
     public int getItemCount() {
-        return recentPhotos.size();
+        return recentPhotoList.size();
     }
 
     public class MainViewHolder extends RecyclerView.ViewHolder {

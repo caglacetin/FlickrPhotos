@@ -1,5 +1,6 @@
 package com.example.cagla.inspiringphotos.data.ui.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -18,6 +20,8 @@ import com.example.cagla.inspiringphotos.R;
 import com.example.cagla.inspiringphotos.data.Globals;
 import com.example.cagla.inspiringphotos.data.network.DataManager;
 import com.example.cagla.inspiringphotos.data.network.response.RecentPhotoRes;
+import com.example.cagla.inspiringphotos.data.ui.photo_detail.PhotoDetailActivity;
+import com.example.cagla.inspiringphotos.data.utilities.ItemClickSupport;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindColor;
@@ -30,9 +34,6 @@ import butterknife.ButterKnife;
  */
 
 public class MainFragment extends Fragment implements MainView, SwipeRefreshLayout.OnRefreshListener{
-
-    @BindView(R.id.stat_text)
-    TextView textviewStat;
 
     @BindView(R.id.gridview_recent_photos)
     RecyclerView recentPhotosRecyclerView;
@@ -90,20 +91,34 @@ public class MainFragment extends Fragment implements MainView, SwipeRefreshLayo
     }
 
     @Override
-    public void bindRecentPhotoService(RecentPhotoRes recentPhotoRes) {
-        textviewStat.setText(recentPhotoRes.stat);
-
-        PhotoAdapter photoAdapter = new PhotoAdapter(recentPhotoRes.recentPhotos.recentPhotos);
+    public void bindRecentPhotoService(final RecentPhotoRes recentPhotoRes) {
+        PhotoAdapter photoAdapter = new PhotoAdapter(recentPhotoRes.recentPhotos.recentPhotoList);
         GridLayoutManager glm = new GridLayoutManager(getActivity(), 2);
         glm.setOrientation(LinearLayoutManager.VERTICAL);
 
         recentPhotosRecyclerView.setLayoutManager(glm);
         recentPhotosRecyclerView.setNestedScrollingEnabled(false);
         recentPhotosRecyclerView.setAdapter(photoAdapter);
+
+        ItemClickSupport.addTo(recentPhotosRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                String farmId = String.valueOf(recentPhotoRes.recentPhotos.recentPhotoList.get(position).photoFarm);
+                String photoServerID = recentPhotoRes.recentPhotos.recentPhotoList.get(position).photoServer;
+                String photoId = recentPhotoRes.recentPhotos.recentPhotoList.get(position).photoId;
+                String photoSecret = recentPhotoRes.recentPhotos.recentPhotoList.get(position).photoSecret;
+                String photoUrl = Globals.HTTP_FARM + farmId + Globals.PHOTO_STATIC_URL + photoServerID + "/" + photoId +"_"+ photoSecret + ".jpg";
+
+                Intent intent = new Intent(getActivity(), PhotoDetailActivity.class);
+                intent.putExtra(getString(R.string.photo_url_format), photoUrl);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
     public void onRefresh() {
         callRecentPhotoService();
     }
+
 }

@@ -1,11 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/main_container"
-    tools:context="com.example.cagla.inspiringphotos.data.ui.main.MainActivity">
+    android:orientation="vertical"
+    android:id="@+id/main_container">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black_light">
+        <TextView
+            android:id="@+id/textview_toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:text="@string/title_flickr"
+            style="@style/AppTheme.Title.Flickr"
+            />
+        <Spinner
+            android:id="@+id/spinner_photo_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/space_medium"
+            android:layout_marginRight="@dimen/space_medium"
+            android:entries="@array/photo_types"
+            android:textAlignment="center"
+            style="@style/SpinnerTheme">
+        </Spinner>
+    </android.support.v7.widget.Toolbar>
 
-</FrameLayout>
+</LinearLayout>

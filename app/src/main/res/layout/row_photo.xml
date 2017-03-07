@@ -4,5 +4,6 @@
     android:id="@+id/imageview_recent_photo"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="@dimen/space_xtiny"
     android:scaleType="centerCrop"/>
 
