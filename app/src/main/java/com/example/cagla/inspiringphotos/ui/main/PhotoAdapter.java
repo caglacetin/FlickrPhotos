@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.cagla.inspiringphotos.Globals;
 import com.example.cagla.inspiringphotos.R;
@@ -44,6 +45,8 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.MainViewHold
 
         Picasso.with(holder.itemView.getContext()).load(photoUrl).into(holder.recentPhotoImageView);
 
+        holder.pictureNo.setText(String.valueOf(position+1));
+
     }
 
     @Override
@@ -55,6 +58,9 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.MainViewHold
 
         @BindView(R.id.imageview_recent_photo)
         ImageView recentPhotoImageView;
+
+        @BindView(R.id.text_picture_no)
+        TextView pictureNo;
 
         public MainViewHolder(View itemView) {
             super(itemView);

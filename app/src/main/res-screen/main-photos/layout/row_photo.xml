@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ImageView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/imageview_recent_photo"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/space_xtiny"
-    android:scaleType="centerCrop"/>
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/imageview_recent_photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_xtiny"
+        android:src="@drawable/search_icon"
+        android:scaleType="centerCrop"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="@dimen/space_medium">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PICTURE "/>
+        <TextView
+            android:id="@+id/text_picture_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="1" />
+    </LinearLayout>
+</FrameLayout>
 
