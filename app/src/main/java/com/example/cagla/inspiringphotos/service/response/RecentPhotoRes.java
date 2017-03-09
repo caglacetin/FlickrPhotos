@@ -1,6 +1,6 @@
-package com.example.cagla.inspiringphotos.network.response;
+package com.example.cagla.inspiringphotos.service.response;
 
-import com.example.cagla.inspiringphotos.network.model.RecentPhotos;
+import com.example.cagla.inspiringphotos.service.model.RecentPhotos;
 import com.google.gson.annotations.SerializedName;
 
 public class RecentPhotoRes {

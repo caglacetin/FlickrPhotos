@@ -1,7 +1,7 @@
 package com.example.cagla.inspiringphotos.ui.main;
 
-import com.example.cagla.inspiringphotos.network.DataManager;
-import com.example.cagla.inspiringphotos.network.response.RecentPhotoRes;
+import com.example.cagla.inspiringphotos.service.DataManager;
+import com.example.cagla.inspiringphotos.service.response.RecentPhotoRes;
 import com.example.cagla.inspiringphotos.ui.base.BasePresenter;
 
 import rx.Subscriber;
@@ -31,9 +31,9 @@ public class MainPresenter extends BasePresenter<MainView> {
         }
     }
 
-    public void getRecentPhotos(String serviceMethod, String apiKey, String format, String jsonCallback){
+    public void getRecentPhotos(String serviceMethod, String apiKey, String format, String jsonCallback, String userId){
         getMvpView().showLoading();
-        subscription = dataManager.recentPhotosService(serviceMethod, apiKey, format, jsonCallback)
+        subscription = dataManager.recentPhotosService(serviceMethod, apiKey, format, jsonCallback, userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<RecentPhotoRes>() {

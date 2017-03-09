@@ -8,7 +8,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,17 +15,17 @@ import android.view.ViewGroup;
 import com.example.cagla.inspiringphotos.Globals;
 import com.example.cagla.inspiringphotos.R;
 import com.example.cagla.inspiringphotos.enums.PhotoTypes;
-import com.example.cagla.inspiringphotos.network.DataManager;
-import com.example.cagla.inspiringphotos.network.response.RecentPhotoRes;
+import com.example.cagla.inspiringphotos.service.DataManager;
+import com.example.cagla.inspiringphotos.service.response.RecentPhotoRes;
 import com.example.cagla.inspiringphotos.ui.photo_detail.PhotoDetailActivity;
 import com.example.cagla.inspiringphotos.utilities.ItemClickSupport;
+import com.tapadoo.alerter.Alerter;
 
 import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainFragment extends Fragment implements   MainView,
-                                                        SwipeRefreshLayout.OnRefreshListener,
                                                         MainActivity.OnChangedPhotoTypeListener{
 
     @BindView(R.id.gridview_recent_photos)
@@ -53,7 +52,6 @@ public class MainFragment extends Fragment implements   MainView,
         initMainPresenter();
         callRecentPhotoService();
 
-        mainSwipeRefreshLayout.setOnRefreshListener(this);
         mainSwipeRefreshLayout.setColorSchemeColors(pink);
     }
 
@@ -65,7 +63,21 @@ public class MainFragment extends Fragment implements   MainView,
 
     private void callRecentPhotoService() {
         if (mainPresenter!=null){
-            mainPresenter.getRecentPhotos(Globals.SERVICE_METHOD, Globals.API_KEY, Globals.FORMAT, Globals.NO_JSON_CALLBACK);
+            mainPresenter.getRecentPhotos(Globals.GET_RECENT_METHOD,
+                                            Globals.API_KEY,
+                                            Globals.FORMAT,
+                                            Globals.NO_JSON_CALLBACK,
+                                            Globals.USER_ID);
+        }
+    }
+
+    private void callPopularPhotoService() {
+        if (mainPresenter!=null){
+            mainPresenter.getRecentPhotos(Globals.GET_POPULAR_METHOD,
+                                            Globals.API_KEY,
+                                            Globals.FORMAT,
+                                            Globals.NO_JSON_CALLBACK,
+                                            Globals.USER_ID);
         }
     }
 
@@ -86,6 +98,7 @@ public class MainFragment extends Fragment implements   MainView,
 
     @Override
     public void bindRecentPhotoService(final RecentPhotoRes recentPhotoRes) {
+
         PhotoAdapter photoAdapter = new PhotoAdapter(recentPhotoRes.recentPhotos.recentPhotoList);
         GridLayoutManager glm = new GridLayoutManager(getActivity(), 2);
         glm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -93,6 +106,10 @@ public class MainFragment extends Fragment implements   MainView,
         recentPhotosRecyclerView.setLayoutManager(glm);
         recentPhotosRecyclerView.setNestedScrollingEnabled(false);
         recentPhotosRecyclerView.setAdapter(photoAdapter);
+
+        if (recentPhotoRes.recentPhotos.recentPhotoList.size()==0){
+            Alerter.create(getActivity()).setTitle("No Photo Found!").setBackgroundColor(R.color.orange).show();
+        }
 
         ItemClickSupport.addTo(recentPhotosRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
@@ -111,24 +128,25 @@ public class MainFragment extends Fragment implements   MainView,
     }
 
     @Override
-    public void onRefresh() {
-        callRecentPhotoService();
-    }
-
-    @Override
-    public void onPhotoTypeChanged(int position) {
-        if (position== PhotoTypes.RECENT_PHOTOS.getPhotoType()){
+    public void onPhotoTypeChanged(final int position) {
+        if (position == PhotoTypes.RECENT_PHOTOS.getPhotoType()){
             callRecentPhotoService();
-            Log.e("recent photos", "callRecentPhotosService");
         }
         else if (position == PhotoTypes.POPULAR_PHOTOS.getPhotoType()){
-            //TODO: callPopularPhotoService!!!!!
-            //TODO: Popular hiç foto yoksa hiç yok yazdır alert ile!!!!!!!
-            Log.e("popular photos", "callPopularPhotosService");
+            callPopularPhotoService();
         }
-    }
 
-    //TODO: internet connection controlü!!!!!!!
-    //TODO: presnter null controlü, stat=fail durumu kontrolüüü?????
+        mainSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (position==0){
+                    callRecentPhotoService();
+                }
+                else if (position==1){
+                    callPopularPhotoService();
+                }
+            }
+        });
+    }
 
 }

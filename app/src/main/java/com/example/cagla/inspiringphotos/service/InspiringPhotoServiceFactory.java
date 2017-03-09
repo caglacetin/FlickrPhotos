@@ -1,4 +1,4 @@
-package com.example.cagla.inspiringphotos.network;
+package com.example.cagla.inspiringphotos.service;
 
 import android.support.annotation.NonNull;
 import android.support.compat.BuildConfig;

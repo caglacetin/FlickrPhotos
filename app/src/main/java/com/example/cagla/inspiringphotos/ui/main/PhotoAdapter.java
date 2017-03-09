@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 import com.example.cagla.inspiringphotos.Globals;
 import com.example.cagla.inspiringphotos.R;
-import com.example.cagla.inspiringphotos.network.model.Photo;
+import com.example.cagla.inspiringphotos.service.model.Photo;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

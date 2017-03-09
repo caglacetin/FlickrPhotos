@@ -3,6 +3,7 @@ package com.example.cagla.inspiringphotos.ui.main;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
@@ -17,13 +18,22 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.spinner_photo_type)
     Spinner photoTypeSpinner;
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
         attachFragment(savedInstanceState);
+        ButterKnife.bind(this);
+
         setSpinner();
+        setToolbar();
+    }
+
+    private void setToolbar() {
+        setSupportActionBar(toolbar);
     }
 
     private void attachFragment(Bundle savedInstanceState) {
@@ -51,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     OnChangedPhotoTypeListener mCallback;
     public interface OnChangedPhotoTypeListener{
         void onPhotoTypeChanged(int position);
+
     }
 
     @Override

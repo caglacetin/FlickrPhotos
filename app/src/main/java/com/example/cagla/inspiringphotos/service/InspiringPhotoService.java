@@ -1,7 +1,7 @@
-package com.example.cagla.inspiringphotos.network;
+package com.example.cagla.inspiringphotos.service;
 
 
-import com.example.cagla.inspiringphotos.network.response.RecentPhotoRes;
+import com.example.cagla.inspiringphotos.service.response.RecentPhotoRes;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -13,5 +13,6 @@ public interface InspiringPhotoService {
     Observable<RecentPhotoRes> getRecentPhotos(@Query("method") String serviceMethod,
                                                @Query("api_key") String apiKey,
                                                @Query("format") String format,
-                                               @Query("nojsoncallback") String jsonCallback);
+                                               @Query("nojsoncallback") String jsonCallback,
+                                               @Query("user_id") String userId);
 }

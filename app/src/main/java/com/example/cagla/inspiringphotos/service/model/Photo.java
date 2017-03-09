@@ -1,4 +1,4 @@
-package com.example.cagla.inspiringphotos.network.model;
+package com.example.cagla.inspiringphotos.service.model;
 
 import com.google.gson.annotations.SerializedName;
 

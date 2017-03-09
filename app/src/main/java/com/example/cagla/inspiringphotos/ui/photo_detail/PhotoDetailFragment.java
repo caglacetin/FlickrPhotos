@@ -41,6 +41,7 @@ public class PhotoDetailFragment extends Fragment {
         Bundle bundle = getActivity().getIntent().getExtras();
         String photoDetailUrl = bundle.getString(getString(R.string.photo_url_format));
 
+        //TODO: zooommmmm
         Picasso.with(getContext())
                 .load(photoDetailUrl)
                 .into(photoDetailImageView, new Callback() {
