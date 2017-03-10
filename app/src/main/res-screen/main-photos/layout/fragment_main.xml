@@ -13,7 +13,7 @@
 
         <android.support.v7.widget.RecyclerView
             android:padding="@dimen/space_xtiny"
-            android:id="@+id/gridview_recent_photos"
+            android:id="@+id/gridview_all_photos"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         </android.support.v7.widget.RecyclerView>

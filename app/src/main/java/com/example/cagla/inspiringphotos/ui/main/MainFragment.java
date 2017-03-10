@@ -16,7 +16,7 @@ import com.example.cagla.inspiringphotos.Globals;
 import com.example.cagla.inspiringphotos.R;
 import com.example.cagla.inspiringphotos.enums.PhotoTypes;
 import com.example.cagla.inspiringphotos.service.DataManager;
-import com.example.cagla.inspiringphotos.service.response.RecentPhotoRes;
+import com.example.cagla.inspiringphotos.service.response.AllPhotosRes;
 import com.example.cagla.inspiringphotos.ui.photo_detail.PhotoDetailActivity;
 import com.example.cagla.inspiringphotos.utilities.ItemClickSupport;
 import com.tapadoo.alerter.Alerter;
@@ -28,8 +28,8 @@ import butterknife.ButterKnife;
 public class MainFragment extends Fragment implements   MainView,
                                                         MainActivity.OnChangedPhotoTypeListener{
 
-    @BindView(R.id.gridview_recent_photos)
-    RecyclerView recentPhotosRecyclerView;
+    @BindView(R.id.gridview_all_photos)
+    RecyclerView allPhotosRecyclerView;
 
     @BindView(R.id.swipe_refresh_layout_main)
     SwipeRefreshLayout mainSwipeRefreshLayout;
@@ -63,21 +63,21 @@ public class MainFragment extends Fragment implements   MainView,
 
     private void callRecentPhotoService() {
         if (mainPresenter!=null){
-            mainPresenter.getRecentPhotos(Globals.GET_RECENT_METHOD,
-                                            Globals.API_KEY,
-                                            Globals.FORMAT,
-                                            Globals.NO_JSON_CALLBACK,
-                                            Globals.USER_ID);
+            mainPresenter.getAllPhotos( Globals.GET_RECENT_METHOD,
+                                        Globals.API_KEY,
+                                        Globals.FORMAT,
+                                        Globals.NO_JSON_CALLBACK,
+                                        Globals.USER_ID);
         }
     }
 
     private void callPopularPhotoService() {
         if (mainPresenter!=null){
-            mainPresenter.getRecentPhotos(Globals.GET_POPULAR_METHOD,
-                                            Globals.API_KEY,
-                                            Globals.FORMAT,
-                                            Globals.NO_JSON_CALLBACK,
-                                            Globals.USER_ID);
+            mainPresenter.getAllPhotos( Globals.GET_POPULAR_METHOD,
+                                        Globals.API_KEY,
+                                        Globals.FORMAT,
+                                        Globals.NO_JSON_CALLBACK,
+                                        Globals.USER_ID);
         }
     }
 
@@ -97,27 +97,26 @@ public class MainFragment extends Fragment implements   MainView,
     }
 
     @Override
-    public void bindRecentPhotoService(final RecentPhotoRes recentPhotoRes) {
-
-        PhotoAdapter photoAdapter = new PhotoAdapter(recentPhotoRes.recentPhotos.recentPhotoList);
+    public void getAllPhotoService(final AllPhotosRes allPhotosRes) {
+        PhotoAdapter photoAdapter = new PhotoAdapter(allPhotosRes.allPhotos.photoList);
         GridLayoutManager glm = new GridLayoutManager(getActivity(), 2);
         glm.setOrientation(LinearLayoutManager.VERTICAL);
 
-        recentPhotosRecyclerView.setLayoutManager(glm);
-        recentPhotosRecyclerView.setNestedScrollingEnabled(false);
-        recentPhotosRecyclerView.setAdapter(photoAdapter);
+        allPhotosRecyclerView.setLayoutManager(glm);
+        allPhotosRecyclerView.setNestedScrollingEnabled(false);
+        allPhotosRecyclerView.setAdapter(photoAdapter);
 
-        if (recentPhotoRes.recentPhotos.recentPhotoList.size()==0){
+        if (allPhotosRes.allPhotos.photoList.size()==0){
             Alerter.create(getActivity()).setTitle("No Photo Found!").setBackgroundColor(R.color.orange).show();
         }
 
-        ItemClickSupport.addTo(recentPhotosRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+        ItemClickSupport.addTo(allPhotosRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                String farmId = String.valueOf(recentPhotoRes.recentPhotos.recentPhotoList.get(position).photoFarm);
-                String photoServerID = recentPhotoRes.recentPhotos.recentPhotoList.get(position).photoServer;
-                String photoId = recentPhotoRes.recentPhotos.recentPhotoList.get(position).photoId;
-                String photoSecret = recentPhotoRes.recentPhotos.recentPhotoList.get(position).photoSecret;
+                String farmId = String.valueOf(allPhotosRes.allPhotos.photoList.get(position).photoFarm);
+                String photoServerID = allPhotosRes.allPhotos.photoList.get(position).photoServer;
+                String photoId = allPhotosRes.allPhotos.photoList.get(position).photoId;
+                String photoSecret = allPhotosRes.allPhotos.photoList.get(position).photoSecret;
                 String photoUrl = Globals.HTTP_FARM + farmId + Globals.PHOTO_STATIC_URL + photoServerID + "/" + photoId +"_"+ photoSecret + ".jpg";
 
                 Intent intent = new Intent(getActivity(), PhotoDetailActivity.class);

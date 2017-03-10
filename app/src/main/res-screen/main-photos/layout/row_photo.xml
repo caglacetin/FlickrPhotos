@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
-        android:id="@+id/imageview_recent_photo"
+        android:id="@+id/imageview_photo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/space_xtiny"

@@ -57,7 +57,4 @@ dependencies {
     compile 'com.facebook.shimmer:shimmer:0.1.0@aar'
     compile 'com.tapadoo.android:alerter:1.0.6'
 
-
-
-
 }

@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class RecentPhotos {
+public class AllPhotos {
 
     @SerializedName("page")
     public int page;
@@ -19,5 +19,5 @@ public class RecentPhotos {
     public int total;
 
     @SerializedName("photo")
-    public List<Photo> recentPhotoList;
+    public List<Photo> photoList;
 }

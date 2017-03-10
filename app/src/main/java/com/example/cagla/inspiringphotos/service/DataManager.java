@@ -1,6 +1,6 @@
 package com.example.cagla.inspiringphotos.service;
 
-import com.example.cagla.inspiringphotos.service.response.RecentPhotoRes;
+import com.example.cagla.inspiringphotos.service.response.AllPhotosRes;
 
 import rx.Observable;
 
@@ -21,8 +21,8 @@ public class DataManager {
         inspiringPhotoService = InspiringPhotoServiceFactory.makeServiceConnection();
     }
 
-    public Observable<RecentPhotoRes> recentPhotosService(String serviceMethod, String apiKey, String format, String jsonCallback, String userId){
-        return inspiringPhotoService.getRecentPhotos(serviceMethod, apiKey, format, jsonCallback, userId);
+    public Observable<AllPhotosRes> bindPhotosService(String serviceMethod, String apiKey, String format, String jsonCallback, String userId){
+        return inspiringPhotoService.bindPhotosService(serviceMethod, apiKey, format, jsonCallback, userId);
     }
 
 }

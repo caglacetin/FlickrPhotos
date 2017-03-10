@@ -1,7 +1,7 @@
 package com.example.cagla.inspiringphotos.ui.main;
 
 import com.example.cagla.inspiringphotos.service.DataManager;
-import com.example.cagla.inspiringphotos.service.response.RecentPhotoRes;
+import com.example.cagla.inspiringphotos.service.response.AllPhotosRes;
 import com.example.cagla.inspiringphotos.ui.base.BasePresenter;
 
 import rx.Subscriber;
@@ -31,12 +31,12 @@ public class MainPresenter extends BasePresenter<MainView> {
         }
     }
 
-    public void getRecentPhotos(String serviceMethod, String apiKey, String format, String jsonCallback, String userId){
+    public void getAllPhotos(String serviceMethod, String apiKey, String format, String jsonCallback, String userId){
         getMvpView().showLoading();
-        subscription = dataManager.recentPhotosService(serviceMethod, apiKey, format, jsonCallback, userId)
+        subscription = dataManager.bindPhotosService(serviceMethod, apiKey, format, jsonCallback, userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<RecentPhotoRes>() {
+                .subscribe(new Subscriber<AllPhotosRes>() {
                     @Override
                     public void onCompleted() {
 
@@ -49,12 +49,12 @@ public class MainPresenter extends BasePresenter<MainView> {
                     }
 
                     @Override
-                    public void onNext(RecentPhotoRes recentPhotoRes) {
+                    public void onNext(AllPhotosRes recentPhotoRes) {
                         getMvpView().hideLoading();
                         if (recentPhotoRes!=null
-                                && recentPhotoRes.recentPhotos!=null
-                                && recentPhotoRes.recentPhotos.recentPhotoList!=null){
-                            getMvpView().bindRecentPhotoService(recentPhotoRes);
+                                && recentPhotoRes.allPhotos!=null
+                                && recentPhotoRes.allPhotos.photoList!=null){
+                            getMvpView().getAllPhotoService(recentPhotoRes);
                         }
                         else {
                             getMvpView().showErrorMessage();

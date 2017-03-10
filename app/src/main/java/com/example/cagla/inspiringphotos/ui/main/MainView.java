@@ -1,7 +1,7 @@
 package com.example.cagla.inspiringphotos.ui.main;
 
 
-import com.example.cagla.inspiringphotos.service.response.RecentPhotoRes;
+import com.example.cagla.inspiringphotos.service.response.AllPhotosRes;
 import com.example.cagla.inspiringphotos.ui.base.MvpView;
 
 public interface MainView extends MvpView {
@@ -12,6 +12,6 @@ public interface MainView extends MvpView {
 
     void showErrorMessage();
 
-    void bindRecentPhotoService(RecentPhotoRes recentPhotoRes);
+    void getAllPhotoService(AllPhotosRes allPhotosRes);
 
 }

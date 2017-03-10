@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
     OnChangedPhotoTypeListener mCallback;
     public interface OnChangedPhotoTypeListener{
         void onPhotoTypeChanged(int position);
-
     }
 
     @Override

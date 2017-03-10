@@ -20,10 +20,10 @@ import butterknife.ButterKnife;
 
 public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.MainViewHolder> {
 
-    private List<Photo> recentPhotoList;
+    private List<Photo> allPhotosList;
 
-    public PhotoAdapter(List<Photo> recentPhotoList){
-        this.recentPhotoList = recentPhotoList;
+    public PhotoAdapter(List<Photo> allPhotosList){
+        this.allPhotosList = allPhotosList;
     }
 
     @Override
@@ -37,13 +37,13 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.MainViewHold
     public void onBindViewHolder(MainViewHolder holder, int position) {
         //String photoUrlFormat = "https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg";
 
-        String farmId = String.valueOf(recentPhotoList.get(position).photoFarm);
-        String photoServerID = recentPhotoList.get(position).photoServer;
-        String photoId = recentPhotoList.get(position).photoId;
-        String photoSecret = recentPhotoList.get(position).photoSecret;
+        String farmId = String.valueOf(allPhotosList.get(position).photoFarm);
+        String photoServerID = allPhotosList.get(position).photoServer;
+        String photoId = allPhotosList.get(position).photoId;
+        String photoSecret = allPhotosList.get(position).photoSecret;
         String photoUrl = Globals.HTTP_FARM + farmId + Globals.PHOTO_STATIC_URL + photoServerID + "/" + photoId +"_"+ photoSecret + ".jpg";
 
-        Picasso.with(holder.itemView.getContext()).load(photoUrl).into(holder.recentPhotoImageView);
+        Picasso.with(holder.itemView.getContext()).load(photoUrl).into(holder.photoImageView);
 
         holder.pictureNo.setText(String.valueOf(position+1));
 
@@ -51,13 +51,13 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.MainViewHold
 
     @Override
     public int getItemCount() {
-        return recentPhotoList.size();
+        return allPhotosList.size();
     }
 
     public class MainViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.imageview_recent_photo)
-        ImageView recentPhotoImageView;
+        @BindView(R.id.imageview_photo)
+        ImageView photoImageView;
 
         @BindView(R.id.text_picture_no)
         TextView pictureNo;
